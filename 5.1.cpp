@@ -47,9 +47,9 @@ class String {
     }
     ~String() {
         delete[] array;
-        array = nullptr;
+        array = NULL;
     }
-    friend ostream& operator<<(ostream& os, const String& str) const {
+    friend ostream& operator<<(ostream& os, const String& str) {
         os << str.array;
         return os;
     }
@@ -61,17 +61,21 @@ class String {
         }
         return array[index];
     }
-    String operator+(const String& str) {
-        strcat(array, str.array);
+    String& operator+(const String& str) {
+        char* tmp = new char[strlen(array) + strlen(str.array) + 1];
+        strcpy(tmp, array);
+        strcat(tmp, str.array);
+        delete[] array;
+        array = tmp;
         return *this;
     }
-    char* operator+(const char* str) {
-        char* tmp = new char[strlen(array)];
+    String operator+(const char* str) {
+        char tmp[strlen(array) + strlen(str) + 1];
         strcpy(tmp, array);
         strcat(tmp, str);
         return tmp;
     }
-    int operator+(int num) { return strlen(array) + num; }
+    operator int() { return strlen(array); }
 };
 
 int main() {

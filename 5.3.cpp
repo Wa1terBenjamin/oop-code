@@ -1,4 +1,4 @@
-/* 1、定义A类，有：
+/*1、定义A类，有：
 私有数据成员a（int）
 构造函数（带默认值0）
 +运算符重载函数，参数为int，用于将a加上该参数
@@ -20,4 +20,55 @@ return 0;
 5、无输入，输出为
 a=3
 a=2
-b=6 */
+b=6*/
+
+#include <iostream>
+
+using namespace std;
+
+class A {
+   private:
+    int a;
+
+   public:
+    A(int _a = 0) : a(_a) {}
+    ~A() {}
+    virtual int operator+(int& _a) {
+        a += _a;
+        return a;
+    }
+    virtual void show() { cout << "a=" << a << endl; }
+};
+
+class B : public A {
+   private:
+    int b;
+
+   public:
+    B(int _a, int _b) : A(_a), b(_b) {}
+    ~B() {}
+    int operator+(int& _b) {
+        b += _b;
+        return b;
+    }
+    void show() {
+        A::show();
+        cout << "b=" << b << endl;
+    }
+};
+
+void add(A& a, int x) {
+    a + x;
+}
+
+int main() {
+    A myA, *p;
+    B myB(2, 3);
+    add(myA, 3);
+    p = &myA;
+    p->show();
+    add(myB, 3);
+    p = &myB;
+    p->show();
+    return 0;
+}
