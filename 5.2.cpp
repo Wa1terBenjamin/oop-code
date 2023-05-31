@@ -85,13 +85,16 @@ class manager {
    public:
     manager(int n) {
         len = 0;
-        for (int i = 0; i < sizeof(array) / sizeof(A*); i++)
-            array[i] = nullptr;
+        array = new A* [n] { nullptr };
     }
     ~manager() {
-        for (int i = 0; i < sizeof(array) / sizeof(A*); i++) {
-            delete array[i];
+        for (int i = 0, lenth = len; lenth > 0; i++) {
+            if (array[i] != nullptr) {
+                delete array[i];
+                lenth--;
+            }
         }
+        delete array;
     }
     void add(int index, const char* n, int a) {
         array[index] = new B(n, a);
@@ -102,16 +105,17 @@ class manager {
         len++;
     }
     void display() {
-        for (int i = 0; i < sizeof(array) / sizeof(A*); i++) {
-            if (array[i]) {
+        for (int i = 0, lenth = len; lenth > 0; i++) {
+            if (array[i] != nullptr) {
                 array[i]->show();
                 array[i]->print();
+                lenth--;
             }
         }
     }
 
    private:
-    A* array[5];
+    A** array;
     int len;
 };
 
