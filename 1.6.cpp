@@ -23,8 +23,8 @@ const char* compare(char* s1, char* s2) {
 }
 
 int main() {
-    char* s1 = new char(10);
-    char* s2 = new char(10);
+    char* s1 = new char[10];
+    char* s2 = new char[10];
     cin >> s1;
     cin >> s2;
     cout << compare(s1, s2);
